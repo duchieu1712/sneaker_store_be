@@ -21,5 +21,20 @@ app.get("/getData",async (req,res)=>{
     }
    
 })
+app.post("/postData",async (req,res)=>{
+    try {
+   let { name } = req.body;
+       const productModel = {
+           name
+       }
 
+       const result = await product.create(productModel)
+
+       res.send(200,"Thành công")
+   } catch (err) {
+       res.send(500,error)
+   }
+   
+  
+})
 
