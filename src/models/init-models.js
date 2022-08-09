@@ -1,12 +1,9 @@
 const DataTypes = require("sequelize").DataTypes;
-const _product = require("./product");
 
 function initModels(sequelize) {
-  const product = _product(sequelize, DataTypes);
 
 
   return {
-    product,
   };
 }
 module.exports = initModels;
