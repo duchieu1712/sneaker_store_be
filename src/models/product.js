@@ -7,9 +7,9 @@ class product extends Sequelize.Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
+      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0,
       primaryKey: true
     },
     name: {
@@ -59,12 +59,19 @@ class product extends Sequelize.Model {
     },
     discount_id: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      references: {
+        model: 'discount',
+        key: 'id'
+      }
     },
     orderdetail_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0
+      references: {
+        model: 'order_detail',
+        key: 'id'
+      }
     }
   }, {
     sequelize,
@@ -80,6 +87,13 @@ class product extends Sequelize.Model {
         ]
       },
       {
+        name: "brand_id",
+        using: "BTREE",
+        fields: [
+          { name: "brand_id" },
+        ]
+      },
+      {
         name: "category_id",
         using: "BTREE",
         fields: [
@@ -87,10 +101,17 @@ class product extends Sequelize.Model {
         ]
       },
       {
-        name: "brand_id",
+        name: "discount_id",
         using: "BTREE",
         fields: [
-          { name: "brand_id" },
+          { name: "discount_id" },
+        ]
+      },
+      {
+        name: "orderdetail_id",
+        using: "BTREE",
+        fields: [
+          { name: "orderdetail_id" },
         ]
       },
     ]

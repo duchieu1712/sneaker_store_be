@@ -7,9 +7,9 @@ class category extends Sequelize.Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
+      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0,
       primaryKey: true
     },
     name: {

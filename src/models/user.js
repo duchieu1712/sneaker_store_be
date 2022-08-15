@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  return brand.init(sequelize, DataTypes);
+  return user.init(sequelize, DataTypes);
 }
 
-class brand extends Sequelize.Model {
+class user extends Sequelize.Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -12,21 +12,38 @@ class brand extends Sequelize.Model {
       allowNull: false,
       primaryKey: true
     },
-    name: {
+    username: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    image: {
+    email: {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    descrip: {
+    password: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    phone: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    created_date: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    address: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    user_type: {
       type: DataTypes.STRING(255),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'brand',
+    tableName: 'user',
     timestamps: false,
     indexes: [
       {

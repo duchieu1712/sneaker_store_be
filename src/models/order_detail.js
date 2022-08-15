@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  return brand.init(sequelize, DataTypes);
+  return order_detail.init(sequelize, DataTypes);
 }
 
-class brand extends Sequelize.Model {
+class order_detail extends Sequelize.Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -12,21 +12,25 @@ class brand extends Sequelize.Model {
       allowNull: false,
       primaryKey: true
     },
-    name: {
-      type: DataTypes.STRING(255),
+    price: {
+      type: DataTypes.FLOAT,
       allowNull: true
     },
-    image: {
-      type: DataTypes.STRING(255),
+    amount: {
+      type: DataTypes.FLOAT,
       allowNull: true
     },
-    descrip: {
-      type: DataTypes.STRING(255),
-      allowNull: true
+    order_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'order',
+        key: 'id'
+      }
     }
   }, {
     sequelize,
-    tableName: 'brand',
+    tableName: 'order_detail',
     timestamps: false,
     indexes: [
       {
@@ -35,6 +39,13 @@ class brand extends Sequelize.Model {
         using: "BTREE",
         fields: [
           { name: "id" },
+        ]
+      },
+      {
+        name: "order_id",
+        using: "BTREE",
+        fields: [
+          { name: "order_id" },
         ]
       },
     ]
