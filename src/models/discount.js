@@ -19,6 +19,10 @@ class discount extends Sequelize.Model {
     price_discounted: {
       type: DataTypes.FLOAT,
       allowNull: true
+    },
+    name: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,

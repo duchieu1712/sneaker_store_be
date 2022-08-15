@@ -12,10 +12,6 @@ class order_detail extends Sequelize.Model {
       allowNull: false,
       primaryKey: true
     },
-    price: {
-      type: DataTypes.FLOAT,
-      allowNull: true
-    },
     amount: {
       type: DataTypes.FLOAT,
       allowNull: true

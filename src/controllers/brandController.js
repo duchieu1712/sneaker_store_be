@@ -33,7 +33,34 @@ const addBrand = async (req, res) => {
   }
 };
 
+const updateBrand = async (req,res) => {
+  try {
+    const {id}= req.params
+    const { name, image, descrip } = req.body;
+    const brandUpdate = await model.brand.findByPk(id)
+    const brandModel = {
+      name,image,descrip
+    }
+    const result = await brandUpdate.update(brandModel)
+    response.successCode("Update brand success", result, res);
+  } catch (error) {
+    response.failCode("Error", res)
+  }
+}
+
+const deleteBrand = async (req,res) => {
+  try {
+    const {id} = req.params;
+    const brandDelete = await model.brand.findByPk(id);
+    const result = await brandDelete.destroy();
+    response.successCode("Delete brand success", result, res);
+  } catch (error) {
+    response.failCode("Error", res)
+  }
+}
 module.exports = {
   getBrand,
-  addBrand
+  addBrand,
+  updateBrand,
+  deleteBrand
 };
