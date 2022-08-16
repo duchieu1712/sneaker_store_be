@@ -1,8 +1,9 @@
 const multer = require('multer');
+const { base_url } = require('.');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, `./public/img`)
+        cb(null, `${base_url}public/img`)
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + file.originalname; //60423412312+ten_img.jpg
