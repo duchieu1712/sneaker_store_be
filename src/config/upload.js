@@ -2,7 +2,7 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, `${process.cwd()}/public/img`)
+        cb(null, `./public/img`)
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + file.originalname; //60423412312+ten_img.jpg
