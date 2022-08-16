@@ -2,6 +2,7 @@ const initModel = require("../models/init-models");
 const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
+const { base_url } = require("../config");
 
 const getBrand = async (req, res) => {
   try {
@@ -13,7 +14,8 @@ const getBrand = async (req, res) => {
 };
 const addBrand = async (req, res) => {
   try {
-    const { name, image, descrip } = req.body;
+    let { name, descrip } = req.body;
+    let image = `${base_url}public/img/${req.file?.filename}`
     const checkBrandExist = await model.brand.findOne({
       where: { name: name },
     });

@@ -4,8 +4,8 @@ const categoryRoute = express.Router()
 
 const categoryController = require('../../controllers/categoryController')
 
-categoryRoute.get("/getBrand", categoryController.getBrand)
-categoryRoute.post("/addBrand", categoryController.addBrand)
-categoryRoute.put("/updateBrand", categoryController.updateBrand)
-categoryRoute.delete("/deleteBrand", categoryController.deleteBrand)
+categoryRoute.get("/getCategory", categoryController.getCategory)
+categoryRoute.post("/addCategory", categoryController.addCategory)
+categoryRoute.put("/updateCategory", categoryController.updateCategory)
+categoryRoute.delete("/deleteCategory", categoryController.deleteCategory)
 module.exports = categoryRoute

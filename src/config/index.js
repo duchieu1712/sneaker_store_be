@@ -10,5 +10,6 @@ module.exports = {
     db_port: process.env.DB_PORT,
     db_dialect: process.env.DB_DIALECT,
     secret_key: process.env.SECRET_KEY,
-    port: process.env.PORT
+    port: process.env.PORT,
+    base_url: process.env.BASE_URL
 }
