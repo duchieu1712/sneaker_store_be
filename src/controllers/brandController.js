@@ -3,6 +3,7 @@ const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
 const { base_url } = require("../config");
+const fs = require("fs");
 
 const getBrand = async (req, res) => {
   try {
@@ -29,8 +30,15 @@ const addBrand = async (req, res) => {
         image,
         descrip,
       };
-      const result = await model.brand.create(brandModel);
-      response.successCode("Add brand success", result, res);
+      const result = await model.brand.create(brandModel).then((image)=>{
+        fs.writeFileSync(
+          process.cwd() + "/public/img/" + image.name,
+          image.data
+        );
+        response.successCode("Add brand success", result, res);
+      })
+      
+      
     }
   } catch (error) {
     response.failCode("Error", res)
