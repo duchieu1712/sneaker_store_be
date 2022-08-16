@@ -30,13 +30,12 @@ const addBrand = async (req, res) => {
         image,
         descrip,
       };
-      const result = await model.brand.create(brandModel).then((image)=>{
-        fs.writeFileSync(
-          process.cwd() + "/public/img/" + image.name,
-          image.data
+      const result = await model.brand.create(brandModel)
+      await fs.writeFileSync(
+          `${process.cwd()}/public/img/`, req.file?.filename
         );
         response.successCode("Add brand success", result, res);
-      })
+      
       
       
     }
