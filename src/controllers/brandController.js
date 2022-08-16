@@ -13,7 +13,7 @@ const getBrand = async (req, res) => {
   }
 };
 const addBrand = async (req, res) => {
-  try {
+  // try {
     let { name, descrip } = req.body;
     let image = `${base_url}public/img/${req.file?.filename}`
     const checkBrandExist = await model.brand.findOne({
@@ -30,9 +30,9 @@ const addBrand = async (req, res) => {
       const result = await model.brand.create(brandModel);
       response.successCode("Add brand success", result, res);
     }
-  } catch (error) {
-    response.failCode("Error", res)
-  }
+  // } catch (error) {
+  //   response.failCode("Error", res)
+  // }
 };
 
 const updateBrand = async (req,res) => {
