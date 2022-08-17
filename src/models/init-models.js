@@ -6,8 +6,6 @@ const _discount = require("./discount");
 const _order = require("./order");
 const _order_detail = require("./order_detail");
 const _product = require("./product");
-const _product_size = require("./product_size");
-const _size = require("./size");
 const _user = require("./user");
 
 function initModels(sequelize) {
@@ -18,12 +16,8 @@ function initModels(sequelize) {
   const order = _order(sequelize, DataTypes);
   const order_detail = _order_detail(sequelize, DataTypes);
   const product = _product(sequelize, DataTypes);
-  const product_size = _product_size(sequelize, DataTypes);
-  const size = _size(sequelize, DataTypes);
   const user = _user(sequelize, DataTypes);
 
-  product.belongsToMany(size, { as: 'size_id_sizes', through: product_size, foreignKey: "product_id", otherKey: "size_id" });
-  size.belongsToMany(product, { as: 'product_id_products', through: product_size, foreignKey: "size_id", otherKey: "product_id" });
   product.belongsTo(brand, { as: "brand", foreignKey: "brand_id"});
   brand.hasMany(product, { as: "products", foreignKey: "brand_id"});
   product.belongsTo(category, { as: "category", foreignKey: "category_id"});
@@ -34,12 +28,8 @@ function initModels(sequelize) {
   order.hasMany(delivery, { as: "deliveries", foreignKey: "order_id"});
   order_detail.belongsTo(order, { as: "order", foreignKey: "order_id"});
   order.hasMany(order_detail, { as: "order_details", foreignKey: "order_id"});
-  product.belongsTo(order_detail, { as: "orderdetail", foreignKey: "orderdetail_id"});
-  order_detail.hasMany(product, { as: "products", foreignKey: "orderdetail_id"});
-  product_size.belongsTo(product, { as: "product", foreignKey: "product_id"});
-  product.hasMany(product_size, { as: "product_sizes", foreignKey: "product_id"});
-  product_size.belongsTo(size, { as: "size", foreignKey: "size_id"});
-  size.hasMany(product_size, { as: "product_sizes", foreignKey: "size_id"});
+  order_detail.belongsTo(product, { as: "product", foreignKey: "product_id"});
+  product.hasMany(order_detail, { as: "order_details", foreignKey: "product_id"});
   order.belongsTo(user, { as: "user", foreignKey: "user_id"});
   user.hasMany(order, { as: "orders", foreignKey: "user_id"});
 
@@ -51,8 +41,6 @@ function initModels(sequelize) {
     order,
     order_detail,
     product,
-    product_size,
-    size,
     user,
   };
 }

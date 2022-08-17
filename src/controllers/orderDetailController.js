@@ -14,9 +14,10 @@ const getOrderDetail = async (req, res) => {
 const addOrderDetail = async (req, res) => {
   try {
     const { amount } = req.body;
-
+    const {productId} = req.params;
     const order_detailModel = {
-        amount
+      amount,
+      product_id: productId
     };
     const result = await model.order_detail.create(order_detailModel);
     response.successCode("Add order_detail success", result, res);
@@ -31,7 +32,7 @@ const updateOrderDetail = async (req, res) => {
     const { amount } = req.body;
     const order_detailUpdate = await model.order_detail.findByPk(id);
     const order_detailModel = {
-        amount
+      amount,
     };
     const result = await order_detailUpdate.update(order_detailModel);
     response.successCode("Update order_detail success", result, res);

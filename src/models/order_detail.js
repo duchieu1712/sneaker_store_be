@@ -23,6 +23,14 @@ class order_detail extends Sequelize.Model {
         model: 'order',
         key: 'id'
       }
+    },
+    product_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'product',
+        key: 'id'
+      }
     }
   }, {
     sequelize,
@@ -42,6 +50,13 @@ class order_detail extends Sequelize.Model {
         using: "BTREE",
         fields: [
           { name: "order_id" },
+        ]
+      },
+      {
+        name: "product_id",
+        using: "BTREE",
+        fields: [
+          { name: "product_id" },
         ]
       },
     ]

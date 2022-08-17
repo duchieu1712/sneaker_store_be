@@ -32,7 +32,11 @@ class order extends Sequelize.Model {
         model: 'user',
         key: 'id'
       }
-    }
+    },
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
   }, {
     sequelize,
     tableName: 'order',

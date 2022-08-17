@@ -37,8 +37,8 @@ class product extends Sequelize.Model {
       allowNull: true,
       defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
     },
-    size_id: {
-      type: DataTypes.INTEGER,
+    size: {
+      type: DataTypes.STRING(255),
       allowNull: true
     },
     category_id: {
@@ -62,14 +62,6 @@ class product extends Sequelize.Model {
       allowNull: true,
       references: {
         model: 'discount',
-        key: 'id'
-      }
-    },
-    orderdetail_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'order_detail',
         key: 'id'
       }
     }
@@ -105,13 +97,6 @@ class product extends Sequelize.Model {
         using: "BTREE",
         fields: [
           { name: "discount_id" },
-        ]
-      },
-      {
-        name: "orderdetail_id",
-        using: "BTREE",
-        fields: [
-          { name: "orderdetail_id" },
         ]
       },
     ]
