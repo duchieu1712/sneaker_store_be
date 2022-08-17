@@ -64,6 +64,10 @@ class product extends Sequelize.Model {
         model: 'discount',
         key: 'id'
       }
+    },
+    price_discounted: {
+      type: DataTypes.FLOAT,
+      allowNull: true
     }
   }, {
     sequelize,
