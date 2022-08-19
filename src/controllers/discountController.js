@@ -3,7 +3,7 @@ const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
 
-const getDiscount = async (req, res) => {
+const getDiscounts = async (req, res) => {
   try {
     const result = await model.discount.findAll();
     response.successCode("Successfully", result, res);
@@ -57,7 +57,7 @@ const deleteDiscount = async (req,res) => {
   }
 }
 module.exports = {
-  getDiscount,
+  getDiscounts,
   addDiscount,
   updateDiscount,
   deleteDiscount

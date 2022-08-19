@@ -3,7 +3,7 @@ const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
 
-const getOrderDetail = async (req, res) => {
+const getOrderDetails = async (req, res) => {
   try {
     const result = await model.order_detail.findAll();
     response.successCode("Successfully", result, res);
@@ -52,7 +52,7 @@ const deleteOrderDetail = async (req, res) => {
   }
 };
 module.exports = {
-  getOrderDetail,
+  getOrderDetails,
   addOrderDetail,
   updateOrderDetail,
   deleteOrderDetail,

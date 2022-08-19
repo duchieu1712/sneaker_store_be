@@ -3,7 +3,7 @@ const sequelize = require("../models/index");
 const model = initModel(sequelize);
 
 
-const getUser = async (req, res)=>{
+const getUsers = async (req, res)=>{
   const result = await model.user.findAll()
   res.status(200).send(result)
 }
@@ -34,6 +34,6 @@ const createUser = async (req, res) => {
 
   module.exports = {
     createUser,
-    getUser
+    getUsers
   }
   

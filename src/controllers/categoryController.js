@@ -3,7 +3,7 @@ const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
 
-const getCategory = async (req, res) => {
+const getCategories = async (req, res) => {
   try {
     const result = await model.category.findAll();
     response.successCode("Successfully", result, res);
@@ -57,7 +57,7 @@ const deleteCategory = async (req,res) => {
   }
 }
 module.exports = {
-  getCategory,
+  getCategories,
   addCategory,
   updateCategory,
   deleteCategory

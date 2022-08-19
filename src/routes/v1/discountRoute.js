@@ -4,7 +4,7 @@ const discountRoute = express.Router()
 
 const discountController = require('../../controllers/discountController')
 
-discountRoute.get("/getDiscount", discountController.getDiscount)
+discountRoute.get("/getDiscounts", discountController.getDiscounts)
 discountRoute.post("/addDiscount", discountController.addDiscount)
 discountRoute.put("/updateDiscount/:id", discountController.updateDiscount)
 discountRoute.delete("/deleteDiscount", discountController.deleteDiscount)

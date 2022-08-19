@@ -4,7 +4,7 @@ const orderDetailRoute = express.Router()
 
 const orderDetailController = require('../../controllers/orderDetailController')
 
-orderDetailRoute.get("/getOrderDetail", orderDetailController.getOrderDetail)
+orderDetailRoute.get("/getOrderDetails", orderDetailController.getOrderDetails)
 orderDetailRoute.post("/addOrderDetail/:productId", orderDetailController.addOrderDetail)
 orderDetailRoute.put("/updateOrderDetail/:id", orderDetailController.updateOrderDetail)
 orderDetailRoute.delete("/deleteOrderDetail", orderDetailController.deleteOrderDetail)

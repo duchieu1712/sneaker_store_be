@@ -2,7 +2,7 @@ const initModel = require("../models/init-models");
 const sequelize = require("../models/index");
 const model = initModel(sequelize);
 
-const getProduct = async(req,res)=>{
+const getProducts = async(req,res)=>{
     const result = await model.product.findAll({
         include:["brand","category"]
 
@@ -39,6 +39,6 @@ const addProduct = async (req, res) => {
   };
 
 module.exports ={
-    getProduct,
+    getProducts,
     addProduct
 }

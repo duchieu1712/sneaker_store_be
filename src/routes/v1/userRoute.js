@@ -24,7 +24,7 @@ const authController = require('../../controllers/authController')
 //r
 // userRoute.get("/getUser", authController.verifyToken ,userController.getUser)
 // userRoute.get("/getUserById/:id", userController.getUserById)
-userRoute.get("/getUser", userController.getUser)
+userRoute.get("/getUsers", userController.getUsers)
 //C
 userRoute.post("/createUser",userController.createUser)
 //U

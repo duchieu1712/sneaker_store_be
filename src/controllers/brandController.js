@@ -4,7 +4,7 @@ const model = initModel(sequelize);
 const response = require("../config/reponse");
 const { base_url } = require("../config");
 
-const getBrand = async (req, res) => {
+const getBrands = async (req, res) => {
   try {
     const result = await model.brand.findAll();
     response.successCode("Successfully", result, res);
@@ -61,7 +61,7 @@ const deleteBrand = async (req,res) => {
   }
 }
 module.exports = {
-  getBrand,
+  getBrands,
   addBrand,
   updateBrand,
   deleteBrand
