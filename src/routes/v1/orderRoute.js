@@ -6,6 +6,6 @@ const orderController = require('../../controllers/orderController')
 
 orderRoute.get("/getOrder", orderController.getOrder)
 orderRoute.post("/addOrder", orderController.addOrder)
-orderRoute.put("/updateOrder", orderController.updateOrder)
+orderRoute.put("/updateOrder/:id", orderController.updateOrder)
 orderRoute.delete("/deleteOrder", orderController.deleteOrder)
 module.exports = orderRoute
