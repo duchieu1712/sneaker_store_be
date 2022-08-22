@@ -37,8 +37,40 @@ const addProduct = async (req, res) => {
       response.failCode("Error", res)
     }
   };
+  const filterProducts = async(req,res)=>{
+    try{
+      let {brand, catagory} = req.body
+      if(brand !== null && catagory !== null){
+        const result = await model.product.findAll({
+          where:{
+            $and:[
+              {brand_id: brand},
+              {category_id: catagory} 
+            ]
+          }
+          
+        })
+        response.successCode("Filter product success", result, res);
+      }
+      else{
+        const result = await model.product.findAll({
+          where:{
+            $or:[
+              {brand_id: brand},
+              {category_id: catagory} 
+            ]
+          }
+        })
+        response.successCode("Filter product success", result, res);
+      }
+    }catch(err){
+      response.failCode("Error", res)
+    }
+   
+  }
 
 module.exports ={
     getProducts,
-    addProduct
+    addProduct,
+    filterProducts
 }
