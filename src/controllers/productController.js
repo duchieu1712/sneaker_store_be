@@ -43,10 +43,8 @@ const addProduct = async (req, res) => {
       if(brand !== null && catagory !== null){
         const result = await model.product.findAll({
           where:{
-            $and:[
-              {brand_id: brand},
-              {category_id: catagory} 
-            ]
+              brand_id: brand,
+              category_id: catagory
           }
           
         })
