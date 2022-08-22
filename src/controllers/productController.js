@@ -1,6 +1,8 @@
 const initModel = require("../models/init-models");
 const sequelize = require("../models/index");
 const model = initModel(sequelize);
+const response = require("../config/reponse");
+const { Op } = require("sequelize");
 
 const getProducts = async(req,res)=>{
     const result = await model.product.findAll({
@@ -38,7 +40,7 @@ const addProduct = async (req, res) => {
     }
   };
   const filterProducts = async(req,res)=>{
-    try{
+    // try{
       let {brand, catagory} = req.body
       if(brand !== null && catagory !== null){
         const result = await model.product.findAll({
@@ -50,20 +52,17 @@ const addProduct = async (req, res) => {
         })
         response.successCode("Filter product success", result, res);
       }
-      else{
+      else if(brand !== null || catagory !== null){
         const result = await model.product.findAll({
           where:{
-            $or:[
-              {brand_id: brand},
-              {category_id: catagory} 
-            ]
+            [Op.or]: [{brand_id: brand}, {category_id: catagory}]
           }
         })
         response.successCode("Filter product success", result, res);
       }
-    }catch(err){
-      response.failCode("Error", res)
-    }
+    // }catch(err){
+    //   response.failCode("Error", res)
+    // }
    
   }
 
