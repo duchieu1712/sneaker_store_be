@@ -1,45 +1,43 @@
-// const bcrypt = require('bcrypt')
-// const jwt = require('jsonwebtoken')
-// const config = require('../config/index')
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
-// const hashPassword = (password) => bcrypt.hashSync(password,10)
+const hashPassword = (password) => bcrypt.hashSync(password, 10);
+const comparePassword = (password, hashPassword) =>
+  bcrypt.compareSync(password, hashPassword);
+const config = require("../config/index");
 
-// const comparePassword = (password,hashPassword)=> bcrypt.compareSync(password,hashPassword)
+const generateToken = (data) => {
+  const token = jwt.sign({ data }, config.secret_key, {
+    expiresIn: "1d",
+  });
 
-// const generateToken = (data)=>{
+  return token;
+};
 
-//     const token = jwt.sign({data},config.secret_key,{expiresIn: "1d"})
+const decodeToken = (token) => {
+  try {
+    const data = jwt.verify(token, config.secret_key);
+    console.log(data);
+    return data;
+  } catch (error) {
+    return null;
+  }
+};
 
-//     return token
-// }
+const verifyToken = (req, res, next) => {
+  const token = req.headers.authorization;
+  const checkToken = decodeToken(token);
+  if (checkToken) {
+    next();
+  } else {
+    res.status(401).send("Invalid token");
+  }
+};
 
-// const decodeToken = (token)=>{
-//     try{
-//         const data = jwt.verify(token,config.secret_key)
-//         return data
-//     }catch(err){
-//         return null
-//     }
-   
-
-// }
-
-// const verifyToken = (req,res,next)=>{
-//     const token = req.headers.authorization
-//     const checkToken = decodeToken(token)
-//     console.log(checkToken);
-
-//     if(checkToken){
-//         next()
-//     }else{
-//         res.status(401).send("Token khong dung")
-//     }
-// }
-
-// module.exports = {
-//     hashPassword,
-//     comparePassword,
-//     generateToken,
-//     decodeToken,
-//     verifyToken
-// }
+module.exports = {
+  hashPassword,
+  comparePassword,
+  generateToken,
+  decodeToken,
+  verifyToken,
+};

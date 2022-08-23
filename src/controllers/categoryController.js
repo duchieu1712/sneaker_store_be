@@ -48,9 +48,8 @@ const updateCategory = async (req,res) => {
 
 const deleteCategory = async (req,res) => {
   try {
-    const {id} = req.params;
-    const categoryDelete = await model.category.findByPk(id);
-    const result = await categoryDelete.destroy();
+    const {ids} = req.body;
+    const result = await model.category.destroy({ where: { id: ids }});
     response.successCode("Delete category success", result, res);
   } catch (error) {
     response.failCode("Error", res)
