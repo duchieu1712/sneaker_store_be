@@ -6,6 +6,9 @@ const config = require('../src/config')
 
 // app.use(bodyParser.urlencoded({ extended: false }))
 // app.use(bodyParser.json())
+const router = express.Router();
+router.use(express.json())
+router.use(express.urlencoded({ extended: true }));
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
