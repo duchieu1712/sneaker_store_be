@@ -8,5 +8,5 @@ const categoryController = require('../../controllers/categoryController')
 categoryRoute.get("/getCategories", categoryController.getCategories)
 categoryRoute.post("/addCategory", authController.verifyToken, categoryController.addCategory)
 categoryRoute.put("/updateCategory/:id", authController.verifyToken, categoryController.updateCategory)
-categoryRoute.post("/deleteCategory", authController.verifyToken, categoryController.deleteCategory)
+categoryRoute.delete("/deleteCategory", authController.verifyToken, categoryController.deleteCategory)
 module.exports = categoryRoute
