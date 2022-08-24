@@ -49,20 +49,9 @@ const updateCategory = async (req,res) => {
 
 const deleteCategory = async (req,res) => {
   try {
-    // const {id} = req.params;
-    // const categoryDelete = await model.category.findByPk(id);
-    // const result = await categoryDelete.destroy();
-    if(req.body == Number){
-      const result = await model.category.destroy({
-        where:{
-          id: req.body
-        }
-      })
-      response.successCode("Delete category success", result, res);
-    }
-   else{
-    response.errorCode("Category ID not allowed", res);
-   }
+    const {ids} = req.body;
+    const result = await model.category.destroy({ where: { id: ids }});
+    response.successCode("Delete category success", result, res);
   } catch (error) {
     response.failCode("Error", res)
   }
