@@ -48,13 +48,12 @@ const updateCategory = async (req,res) => {
 }
 
 const deleteCategory = async (req,res) => {
-  // try {
-    const {ids} = req.body;
-    const result = await model.category.destroy({ where: { id: ids }});
+  try {
+    const result = await model.category.destroy({ where: { id: req.body }});
     response.successCode("Delete category success", result, res);
-  // } catch (error) {
-  //   response.failCode("Error", res)
-  // }
+  } catch (error) {
+    response.failCode("Error", res)
+  }
 }
 module.exports = {
   getCategories,
