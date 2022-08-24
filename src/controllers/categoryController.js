@@ -2,6 +2,7 @@ const initModel = require("../models/init-models");
 const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
+const category = require("../models/category");
 
 const getCategories = async (req, res) => {
   try {
@@ -48,10 +49,20 @@ const updateCategory = async (req,res) => {
 
 const deleteCategory = async (req,res) => {
   try {
-    const {id} = req.params;
-    const categoryDelete = await model.category.findByPk(id);
-    const result = await categoryDelete.destroy();
-    response.successCode("Delete category success", result, res);
+    // const {id} = req.params;
+    // const categoryDelete = await model.category.findByPk(id);
+    // const result = await categoryDelete.destroy();
+    if(req.body == Number){
+      const result = await model.category.destroy({
+        where:{
+          id: req.body
+        }
+      })
+      response.successCode("Delete category success", result, res);
+    }
+   else{
+    response.errorCode("Category ID not allowed", res);
+   }
   } catch (error) {
     response.failCode("Error", res)
   }
