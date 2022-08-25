@@ -13,24 +13,6 @@ const getUserList = async (req, res) => {
   }
 };
 
-const createUser = async (req, res) => {
-  // try {
-  const { userName, userPassword, email, phone, address, userType } = req.body;
-  const userModel = {
-    user_name: userName,
-    user_password: userPassword,
-    email: email,
-    phone: phone,
-    address: address,
-    user_type: userType,
-  };
-  const result = await model.user.create(userModel);
-  res.status(200).send(result);
-  // } catch (err) {
-  //   res.status(500).send("Error");
-  // }
-};
-
 const signUp = async (req, res) => {
   try {
     const { username, email, password, phone, address, status, user_type } = req.body;
@@ -80,9 +62,40 @@ const signIn = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const { user_name, user_password, email, phone, address, user_type, status } =
+      req.body;
+    const {id} = req.params;
+    const userUpdate = await model.user.findByPk(id)
+    const userModel = {
+      user_name,
+      user_password,
+      email,
+      phone,
+      address,
+      user_type,
+      status
+    };
+    const result = await userUpdate.update(userModel);
+    res.status(200).send(result);
+  } catch (err) {
+    res.status(500).send("Error");
+  }
+};
+
+const deleteUser = async (req,res) => {
+  try {
+    const result = await model.user.destroy({ where: { id: req.body }});
+    response.successCode("Delete user success", result, res);
+  } catch (error) {
+    response.failCode("Error", res)
+  }
+}
 module.exports = {
-  createUser,
   getUserList,
   signIn,
   signUp,
+  updateUser,
+  deleteUser
 };
