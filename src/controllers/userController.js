@@ -64,13 +64,13 @@ const signIn = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const { user_name, user_password, email, phone, address, user_type, status } =
+    const { user_name, password, email, phone, address, user_type, status } =
       req.body;
     const {id} = req.params;
     const userUpdate = await model.user.findByPk(id)
     const userModel = {
       user_name,
-      user_password,
+      password,
       email,
       phone,
       address,
