@@ -33,7 +33,7 @@ const createUser = async (req, res) => {
 
 const signUp = async (req, res) => {
   try {
-    const { username, email, password, phone, address } = req.body;
+    const { username, email, password, phone, address, status, user_type } = req.body;
     const checkLogin = await model.user.findOne({
       where: { email: email },
     });
@@ -46,8 +46,8 @@ const signUp = async (req, res) => {
         password: authController.hashPassword(password),
         phone,
         address,
-        user_type: 0, // 0: customer, 1: admin
-        status: 0, // 0: normal, 1: shipping
+        user_type,
+        status
       };
       const result = await model.user.create(userModel);
       response.successCode("Sign up success", result, res);
