@@ -53,7 +53,12 @@ const signIn = async (req, res) => {
     );
     if (checkUser && checkPassword) {
       const token = authController.generateToken(checkUser);
-      response.successCode("Sign in success", token, res);
+      const user_type = checkUser.user_type;
+      const signInToken = {
+        token,
+        user_type
+      }
+      response.successCode("Sign in success", signInToken, res);
     } else {
       response.errorCode("Wrong email or password !!!", res);
     }
