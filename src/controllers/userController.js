@@ -64,12 +64,12 @@ const signIn = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const { user_name, password, email, phone, address, user_type, status } =
+    const { username, password, email, phone, address, user_type, status } =
       req.body;
     const {id} = req.params;
     const userUpdate = await model.user.findByPk(id)
     const userModel = {
-      user_name,
+      username,
       password,
       email,
       phone,
@@ -78,9 +78,9 @@ const updateUser = async (req, res) => {
       status
     };
     const result = await userUpdate.update(userModel);
-    res.status(200).send(result);
+    response.successCode("Update category success", result, res);
   } catch (err) {
-    res.status(500).send("Error");
+    response.failCode("Error", res)
   }
 };
 
