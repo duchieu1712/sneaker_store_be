@@ -4,6 +4,16 @@ const model = initModel(sequelize);
 const response = require("../config/reponse");
 const authController = require("./authController");
 
+const getUserById = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const result = await model.user.findByPk(id);
+    response.successCode("Successfully", result, res);
+  } catch (error) {
+    response.errorCode("Error", res);
+  }
+};
+
 const getUserList = async (req, res) => {
   try {
     const result = await model.user.findAll();
@@ -175,6 +185,7 @@ const forgotPassword = async (req, res) => {
   }
 };
 module.exports = {
+  getUserById,
   getUserList,
   signIn,
   signUp,
