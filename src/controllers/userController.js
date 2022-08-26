@@ -152,6 +152,28 @@ const changePassword = async (req, res) => {
     response.failCode("Error", res);
   }
 };
+
+const forgotPassword = async (req, res) => {
+  try {
+    const { email, newPassword, confirmPassword } = req.body;
+    const checkEmailUer = await model.user.findOne({where: {email :email}})
+    if (checkEmailUer) {
+      if (newPassword === confirmPassword) {
+        const userPassword = {
+          password: authController.hashPassword(newPassword),
+        };
+        const result = await checkEmailUer.update(userPassword);
+        response.successCode("Change password success", result, res);
+      } else {
+        response.errorCode("Confirm password is wrong !!!", res);
+      }
+    } else {
+      response.errorCode("Wrong email !!!", res);
+    }
+  } catch (error) {
+    response.failCode("Error", res);
+  }
+};
 module.exports = {
   getUserList,
   signIn,
@@ -159,5 +181,6 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
-  changePassword
+  changePassword,
+  forgotPassword
 };
