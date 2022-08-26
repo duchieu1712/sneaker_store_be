@@ -128,14 +128,14 @@ const deleteUser = async (req, res) => {
 
 const changePassword = async (req, res) => {
   // try {
-    const { oldPassowrd, newPassword, confirmPassword } = req.body;
+    const { newPassword, confirmPassword } = req.body;
     const {id} = req.params;
     const userChangePassword = await model.user.findOne({where: {id :id}})
-    const checkPassword = authController.comparePassword(
-      oldPassowrd,
-      userChangePassword.password
-    );
-    if (checkPassword) {
+    // const checkPassword = authController.comparePassword(
+    //   oldPassowrd,
+    //   userChangePassword.password
+    // );
+    // if (checkPassword) {
       if (newPassword === confirmPassword) {
         const userPassword = {
           password: authController.hashPassword(newPassword),
@@ -145,9 +145,9 @@ const changePassword = async (req, res) => {
       } else {
         response.errorCode("Confirm password is wrong !!!", res);
       }
-    } else {
-      response.errorCode("Wrong password", res);
-    }
+    // } else {
+    //   response.errorCode("Wrong password", res);
+    // }
   // } catch (error) {
   //   response.failCode("Error", res);
   // }
