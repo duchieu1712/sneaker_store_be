@@ -17,7 +17,6 @@ const generateToken = (data) => {
 const decodeToken = (token) => {
   try {
     const data = jwt.verify(token, config.secret_key);
-    console.log(data);
     return data;
   } catch (error) {
     return null;

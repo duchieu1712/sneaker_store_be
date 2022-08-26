@@ -15,7 +15,8 @@ const getUserList = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const { username, email, password, phone, address, status, user_type } = req.body;
+    const { username, email, password, phone, address, status, user_type } =
+      req.body;
     const checkLogin = await model.user.findOne({
       where: { email: email },
     });
@@ -29,7 +30,7 @@ const createUser = async (req, res) => {
         phone,
         address,
         user_type,
-        status
+        status,
       };
       const result = await model.user.create(userModel);
       response.successCode("Sign up success", result, res);
@@ -55,7 +56,7 @@ const signUp = async (req, res) => {
         phone,
         address,
         user_type: "Customer",
-        status: 0
+        status: 0,
       };
       const result = await model.user.create(userModel);
       response.successCode("Sign up success", result, res);
@@ -82,8 +83,8 @@ const signIn = async (req, res) => {
       const user_type = checkUser.user_type;
       const signInToken = {
         token,
-        user_type
-      }
+        user_type,
+      };
       response.successCode("Sign in success", signInToken, res);
     } else {
       response.errorCode("Wrong email or password !!!", res);
@@ -97,8 +98,8 @@ const updateUser = async (req, res) => {
   try {
     const { username, password, email, phone, address, user_type, status } =
       req.body;
-    const {id} = req.params;
-    const userUpdate = await model.user.findByPk(id)
+    const { id } = req.params;
+    const userUpdate = await model.user.findByPk(id);
     const userModel = {
       username,
       password,
@@ -106,28 +107,57 @@ const updateUser = async (req, res) => {
       phone,
       address,
       user_type,
-      status
+      status,
     };
     const result = await userUpdate.update(userModel);
     response.successCode("Update category success", result, res);
   } catch (err) {
-    response.failCode("Error", res)
+    response.failCode("Error", res);
   }
 };
 
-const deleteUser = async (req,res) => {
+const deleteUser = async (req, res) => {
   try {
-    const result = await model.user.destroy({ where: { id: req.body }});
+    const result = await model.user.destroy({ where: { id: req.body } });
     response.successCode("Delete user success", result, res);
   } catch (error) {
-    response.failCode("Error", res)
+    response.failCode("Error", res);
   }
-}
+};
+
+const changePassword = async (req, res) => {
+  try {
+    const { oldPassowrd, newPassword, confirmPassword } = req.body;
+    const token = req.headers.authorization;
+    const userData = authController.decodeToken(token);
+    const checkPassword = authController.comparePassword(
+      oldPassowrd,
+      userData.password
+    );
+    if (checkPassword) {
+      if (newPassword === confirmPassword) {
+        const user = await model.user.findByPk(userData.id);
+        const userPassword = {
+          password: authController.hashPassword(newPassword),
+        };
+        const result = await user.update(userPassword);
+        response.successCode("Change password success", result, res);
+      } else {
+        response.errorCode("Confirm password is wrong !!!", res);
+      }
+    } else {
+      response.errorCode("Wrong password", res);
+    }
+  } catch (error) {
+    response.failCode("Error", res);
+  }
+};
 module.exports = {
   getUserList,
   signIn,
   signUp,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  changePassword
 };
