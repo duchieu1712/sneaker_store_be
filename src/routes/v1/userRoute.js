@@ -10,7 +10,7 @@ userRoute.post("/createUser", authController.verifyToken, userController.createU
 userRoute.put("/updateUser/:id", authController.verifyToken, userController.updateUser)
 userRoute.post("/deleteUser", authController.verifyToken, userController.deleteUser)
 userRoute.put("/changePassword/:id", authController.verifyToken, userController.changePassword)
-userRoute.post("/forgotPassword" , userController.changePassword)
+userRoute.post("/forgotPassword", userController.forgotPassword)
 
 
 module.exports = userRoute

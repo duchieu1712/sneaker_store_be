@@ -156,13 +156,13 @@ const changePassword = async (req, res) => {
 const forgotPassword = async (req, res) => {
   try {
     const { email, newPassword, confirmPassword } = req.body;
-    const checkEmailUer = await model.user.findOne({where: {email :email}})
-    if (checkEmailUer) {
+    const checkEmailUser = await model.user.findOne({where: {email :email}})
+    if (checkEmailUser) {
       if (newPassword === confirmPassword) {
         const userPassword = {
           password: authController.hashPassword(newPassword),
         };
-        const result = await checkEmailUer.update(userPassword);
+        const result = await checkEmailUser.update(userPassword);
         response.successCode("Change password success", result, res);
       } else {
         response.errorCode("Confirm password is wrong !!!", res);
