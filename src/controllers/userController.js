@@ -13,7 +13,7 @@ const getUserList = async (req, res) => {
   }
 };
 
-const signUp = async (req, res) => {
+const createUser = async (req, res) => {
   try {
     const { username, email, password, phone, address, status, user_type } = req.body;
     const checkLogin = await model.user.findOne({
@@ -30,6 +30,32 @@ const signUp = async (req, res) => {
         address,
         user_type,
         status
+      };
+      const result = await model.user.create(userModel);
+      response.successCode("Sign up success", result, res);
+    }
+  } catch (error) {
+    response.failCode("Error !!!", res);
+  }
+};
+
+const signUp = async (req, res) => {
+  try {
+    const { username, email, password, phone, address } = req.body;
+    const checkLogin = await model.user.findOne({
+      where: { email: email },
+    });
+    if (checkLogin) {
+      response.errorCode("Account Existed !!!", res);
+    } else {
+      const userModel = {
+        username,
+        email,
+        password: authController.hashPassword(password),
+        phone,
+        address,
+        user_type: "Customer",
+        status: 0
       };
       const result = await model.user.create(userModel);
       response.successCode("Sign up success", result, res);
@@ -101,6 +127,7 @@ module.exports = {
   getUserList,
   signIn,
   signUp,
+  createUser,
   updateUser,
   deleteUser
 };
