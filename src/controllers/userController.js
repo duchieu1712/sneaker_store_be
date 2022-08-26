@@ -127,7 +127,7 @@ const deleteUser = async (req, res) => {
 };
 
 const changePassword = async (req, res) => {
-  try {
+  // try {
     const { oldPassowrd, newPassword, confirmPassword } = req.body;
     const {id} = req.params;
     const userChangePassword = await model.user.findByPk(id)
@@ -148,9 +148,9 @@ const changePassword = async (req, res) => {
     } else {
       response.errorCode("Wrong password", res);
     }
-  } catch (error) {
-    response.failCode("Error", res);
-  }
+  // } catch (error) {
+  //   response.failCode("Error", res);
+  // }
 };
 module.exports = {
   getUserList,
