@@ -80,12 +80,13 @@ const signIn = async (req, res) => {
     );
     if (checkUser && checkPassword) {
       const token = authController.generateToken(checkUser);
-      const user_type = checkUser.user_type;
-      const signInToken = {
+      const result = {
         token,
-        user_type,
+        user_type: checkUser.user_type,
+        id: checkUser.id,
+        status: checkUser.status
       };
-      response.successCode("Sign in success", signInToken, res);
+      response.successCode("Sign in success", result, res);
     } else {
       response.errorCode("Wrong email or password !!!", res);
     }
@@ -128,19 +129,18 @@ const deleteUser = async (req, res) => {
 const changePassword = async (req, res) => {
   try {
     const { oldPassowrd, newPassword, confirmPassword } = req.body;
-    const token = req.headers.authorization;
-    const userData = authController.decodeToken(token);
+    const {id} = req.params;
+    const userChangePassword = await model.user.findByPk(id)
     const checkPassword = authController.comparePassword(
       oldPassowrd,
-      userData.password
+      userChangePassword.password
     );
     if (checkPassword) {
       if (newPassword === confirmPassword) {
-        const user = await model.user.findByPk(userData.id);
         const userPassword = {
           password: authController.hashPassword(newPassword),
         };
-        const result = await user.update(userPassword);
+        const result = await userChangePassword.update(userPassword);
         response.successCode("Change password success", result, res);
       } else {
         response.errorCode("Confirm password is wrong !!!", res);
