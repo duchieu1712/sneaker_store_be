@@ -52,9 +52,7 @@ const updateBrand = async (req,res) => {
 
 const deleteBrand = async (req,res) => {
   try {
-    const {id} = req.params;
-    const brandDelete = await model.brand.findByPk(id);
-    const result = await brandDelete.destroy();
+    const result = await model.category.destroy({ where: { id: req.body }});
     response.successCode("Delete brand success", result, res);
   } catch (error) {
     response.failCode("Error", res)
