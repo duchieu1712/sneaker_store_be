@@ -38,7 +38,8 @@ const addBrand = async (req, res) => {
 const updateBrand = async (req,res) => {
   try {
     const {id}= req.params
-    const { name, image, descrip } = req.body;
+    const { name, descrip } = req.body;
+    let image = `${base_url}public/images/${req.file?.filename}`
     const brandUpdate = await model.brand.findByPk(id)
     const brandModel = {
       name,image,descrip
