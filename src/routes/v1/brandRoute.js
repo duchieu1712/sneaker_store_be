@@ -7,7 +7,7 @@ const upload = require('../../config/upload')
 
 
 brandRoute.get("/getBrands", brandController.getBrands)
-brandRoute.post("/addBrand",upload.single("brand"), brandController.addBrand)
-brandRoute.put("/updateBrand/:id",upload.single("brand"), brandController.updateBrand)
+brandRoute.post("/addBrand",upload.single("image"), brandController.addBrand)
+brandRoute.put("/updateBrand/:id",upload.single("image"), brandController.updateBrand)
 brandRoute.post("/deleteBrand", brandController.deleteBrand)
 module.exports = brandRoute
