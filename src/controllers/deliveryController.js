@@ -48,9 +48,7 @@ const updateDelivery = async (req,res) => {
 
 const deleteDelivery = async (req,res) => {
   try {
-    const {id} = req.params;
-    const deliveryDelete = await model.delivery.findByPk(id);
-    const result = await deliveryDelete.destroy();
+    const result = await model.category.destroy({ where: { id: req.body }});
     response.successCode("Delete delivery success", result, res);
   } catch (error) {
     response.failCode("Error", res)

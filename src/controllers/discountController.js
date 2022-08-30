@@ -48,9 +48,7 @@ const updateDiscount = async (req,res) => {
 
 const deleteDiscount = async (req,res) => {
   try {
-    const {id} = req.params;
-    const discountDelete = await model.discount.findByPk(id);
-    const result = await discountDelete.destroy();
+    const result = await model.category.destroy({ where: { id: req.body }});
     response.successCode("Delete discount success", result, res);
   } catch (error) {
     response.failCode("Error", res)
