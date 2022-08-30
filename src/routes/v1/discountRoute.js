@@ -7,5 +7,5 @@ const discountController = require('../../controllers/discountController')
 discountRoute.get("/getDiscounts", discountController.getDiscounts)
 discountRoute.post("/addDiscount", discountController.addDiscount)
 discountRoute.put("/updateDiscount/:id", discountController.updateDiscount)
-discountRoute.delete("/deleteDiscount", discountController.deleteDiscount)
+discountRoute.post("/deleteDiscount", discountController.deleteDiscount)
 module.exports = discountRoute
