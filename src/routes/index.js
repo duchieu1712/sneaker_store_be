@@ -14,10 +14,10 @@ rootRouter.use("/v1/user",userRoute)
 rootRouter.use("/v1/product",productRoute)
 rootRouter.use("/v1/brand",brandRoute)
 rootRouter.use("/v1/category",categoryRoute)
-rootRouter.use("/v1/category",deliveryRoute)
-rootRouter.use("/v1/category",discountRoute)
-rootRouter.use("/v1/category",orderDetailRoute)
-rootRouter.use("/v1/category",orderRoute)
+rootRouter.use("/v1/delivery",deliveryRoute)
+rootRouter.use("/v1/discount",discountRoute)
+rootRouter.use("/v1/orderDetail",orderDetailRoute)
+rootRouter.use("/v1/order",orderRoute)
 
 
 module.exports = rootRouter
