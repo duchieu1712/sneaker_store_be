@@ -23,14 +23,6 @@ class delivery extends Sequelize.Model {
     estimate: {
       type: DataTypes.STRING(255),
       allowNull: true
-    },
-    order_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-        model: 'order',
-        key: 'id'
-      }
     }
   }, {
     sequelize,
@@ -43,13 +35,6 @@ class delivery extends Sequelize.Model {
         using: "BTREE",
         fields: [
           { name: "id" },
-        ]
-      },
-      {
-        name: "order_id",
-        using: "BTREE",
-        fields: [
-          { name: "order_id" },
         ]
       },
     ]

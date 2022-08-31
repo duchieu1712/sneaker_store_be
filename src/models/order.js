@@ -32,6 +32,14 @@ class order extends Sequelize.Model {
         model: 'user',
         key: 'id'
       }
+    },
+    delivery_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'delivery',
+        key: 'id'
+      }
     }
   }, {
     sequelize,
@@ -51,6 +59,13 @@ class order extends Sequelize.Model {
         using: "BTREE",
         fields: [
           { name: "user_id" },
+        ]
+      },
+      {
+        name: "delivery_id",
+        using: "BTREE",
+        fields: [
+          { name: "delivery_id" },
         ]
       },
     ]
