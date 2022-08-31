@@ -50,27 +50,31 @@ const addProduct = async (req, res) => {
   }
 };
 const filterProducts = async (req, res) => {
-  // try{
-  let { brand, catagory } = req.body;
-  if (brand !== null && catagory !== null) {
-    const result = await model.product.findAll({
-      where: {
-        brand_id: brand,
-        category_id: catagory,
-      },
+  try {
+    const { brand, category } = req.query;
+    const brandId = await model.brand.findOne({ where: { name: brand } });
+    const categoryId = await model.category.findOne({
+      where: { name: category },
     });
-    response.successCode("Filter product success", result, res);
-  } else if (brand !== null || catagory !== null) {
-    const result = await model.product.findAll({
-      where: {
-        [Op.or]: [{ brand_id: brand }, { category_id: catagory }],
-      },
-    });
-    response.successCode("Filter product success", result, res);
+    if (brand !== null && category !== null) {
+      const result = await model.product.findAll({
+        where: {
+          brand_id: brandId,
+          category_id: categoryId,
+        },
+      });
+      response.successCode("Filter product success", result, res);
+    } else if (brand !== null || category !== null) {
+      const result = await model.product.findAll({
+        where: {
+          [Op.or]: [{ brand_id: brandId }, { category_id: categoryId }],
+        },
+      });
+      response.successCode("Filter product success", result, res);
+    }
+  } catch (err) {
+    response.failCode("Error", res);
   }
-  // }catch(err){
-  //   response.failCode("Error", res)
-  // }
 };
 
 module.exports = {
