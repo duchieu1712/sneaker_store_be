@@ -16,7 +16,7 @@ const getProducts = async (req, res) => {
       options.where.category_id = category;
     }
     if(search){
-      options.where.name = search;
+      options.where.name = {[Op.like]: `%${search}%`};
     }
     if (!brand && !category && !search) {
       options = { include: ["brand", "category", "discount"] };
