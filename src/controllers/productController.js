@@ -3,6 +3,7 @@ const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
 const { Op } = require("sequelize");
+const { base_url } = require("../config");
 
 const getProducts = async (req, res) => {
   const result = await model.product.findAll({
@@ -10,6 +11,7 @@ const getProducts = async (req, res) => {
   });
   res.status(200).send(result);
 };
+
 const addProduct = async (req, res) => {
   try {
     const {
@@ -21,15 +23,25 @@ const addProduct = async (req, res) => {
       category_id,
       brand_id,
       discount_id,
-      orderdetail_id,
-      image,
     } = req.body;
+    const images = [];
+    {
+      req.files.map((item) => {
+        const src = `${base_url}public/images/${item.filename}`;
+        images.push(src);
+      });
+    }
     const checkProductExist = await model.product.findOne({
       where: { name: name },
     });
+    const discount = await model.discount.findOne({
+      where: { id: discount_id },
+    });
+    
     if (checkProductExist) {
-      response.errorCode("Brand existed", res);
+      response.errorCode("Product existed", res);
     } else {
+      const price_discounted = price - price * discount.percent/100;
       const productModel = {
         name,
         price,
@@ -38,9 +50,9 @@ const addProduct = async (req, res) => {
         category_id,
         brand_id,
         discount_id,
-        orderdetail_id,
-        image,
+        image: images.toString(),
         descrip,
+        price_discounted,
       };
       const result = await model.product.create(productModel);
       response.successCode("Add product success", result, res);
@@ -49,6 +61,7 @@ const addProduct = async (req, res) => {
     response.failCode("Error", res);
   }
 };
+
 const filterProducts = async (req, res) => {
   try {
     const { brand, category } = req.query;

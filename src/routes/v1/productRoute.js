@@ -1,13 +1,11 @@
-const express = require('express')
+const express = require("express");
 
-const productRoute = express.Router()
+const productRoute = express.Router();
+const upload = require("../../config/upload");
+const productController = require("../../controllers/productController");
 
-const productController = require('../../controllers/productController')
+productRoute.get("/getProducts", productController.getProducts);
+productRoute.post("/addProduct", upload.array("images"), productController.addProduct);
+productRoute.get("/filterProduct", productController.filterProducts);
 
-productRoute.get("/getProducts", productController.getProducts),
-productRoute.post("/createProduct",productController.addProduct),
-productRoute.get("/filterProduct",productController.filterProducts),
-// productRoute.get("/searchProduct",productController.searchProduct)
-
-module.exports = productRoute
-
+module.exports = productRoute;
