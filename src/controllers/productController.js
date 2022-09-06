@@ -6,14 +6,30 @@ const { Op } = require("sequelize");
 const { base_url } = require("../config");
 
 const getProducts = async (req, res) => {
-  const result = await model.product.findAll({
-    include: ["brand", "category"],
-  });
-  res.status(200).send(result);
+  try {
+    const { brand, category, search } = req.query;
+    let options = { where: {} };
+    if (brand) {
+      options.where.brand_id = brand;
+    }
+    if (category) {
+      options.where.category_id = category;
+    }
+    if(search){
+      options.where.name = search;
+    }
+    if (!brand && !category && !search) {
+      options = { include: ["brand", "category", "discount"] };
+    }
+    result = await model.product.findAll(options);
+    response.successCode("Get product success", result, res);
+  } catch (err) {
+    response.failCode("Error", res);
+  }
 };
 
 const addProduct = async (req, res) => {
-  // try {
+  try {
     const {
       name,
       price,
@@ -37,11 +53,11 @@ const addProduct = async (req, res) => {
     const discount = await model.discount.findOne({
       where: { id: discount_id },
     });
-    
+
     if (checkProductExist) {
       response.errorCode("Product existed", res);
     } else {
-      const price_discounted = price - price * discount.percent/100;
+      const price_discounted = price - (price * discount.percent) / 100;
       const productModel = {
         name,
         price,
@@ -57,41 +73,67 @@ const addProduct = async (req, res) => {
       const result = await model.product.create(productModel);
       response.successCode("Add product success", result, res);
     }
-  // } catch (error) {
-  //   response.failCode("Error", res);
-  // }
+  } catch (error) {
+    response.failCode("Error", res);
+  }
 };
-
-const filterProducts = async (req, res) => {
+const updateProduct = async (req, res) => {
   try {
-    const { brand, category } = req.query;
-    const brandId = await model.brand.findOne({ where: { name: brand } });
-    const categoryId = await model.category.findOne({
-      where: { name: category },
-    });
-    if (brand !== null && category !== null) {
-      const result = await model.product.findAll({
-        where: {
-          brand_id: brandId,
-          category_id: categoryId,
-        },
+    const { id } = req.params;
+    const {
+      name,
+      price,
+      descrip,
+      highlights,
+      size,
+      category_id,
+      brand_id,
+      discount_id,
+    } = req.body;
+    const images = [];
+    {
+      req.files.map((item) => {
+        const src = `${base_url}public/images/${item.filename}`;
+        images.push(src);
       });
-      response.successCode("Filter product success", result, res);
-    } else if (brand !== null || category !== null) {
-      const result = await model.product.findAll({
-        where: {
-          [Op.or]: [{ brand_id: brandId }, { category_id: categoryId }],
-        },
-      });
-      response.successCode("Filter product success", result, res);
     }
-  } catch (err) {
+    const productUpdate = await model.product.findByPk(id);
+    const discount = await model.discount.findOne({
+      where: { id: discount_id },
+    });
+
+    const price_discounted = price - (price * discount.percent) / 100;
+    const productModel = {
+      name,
+      price,
+      highlights,
+      size,
+      category_id,
+      brand_id,
+      discount_id,
+      image: images.toString(),
+      descrip,
+      price_discounted,
+    };
+    const result = await productUpdate.update(productModel)
+    response.successCode("Update product success", result, res);
+  } catch (error) {
     response.failCode("Error", res);
   }
 };
 
+const deleteProduct = async (req,res) => {
+  try {
+    const result = await model.product.destroy({ where: { id: req.body }});
+    response.successCode("Delete product success", result, res);
+  } catch (error) {
+    response.failCode("Error", res)
+  }
+}
+
 module.exports = {
   getProducts,
   addProduct,
-  filterProducts,
+  updateProduct,
+  deleteProduct
 };
