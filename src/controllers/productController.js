@@ -27,6 +27,15 @@ const getProducts = async (req, res) => {
     response.failCode("Error", res);
   }
 };
+const getProductById = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const result = await model.product.findByPk(id);
+    response.successCode("Successfully", result, res);
+  } catch (error) {
+    response.errorCode("Error", res)
+  }
+}
 
 const addProduct = async (req, res) => {
   try {
@@ -133,6 +142,7 @@ const deleteProduct = async (req,res) => {
 
 module.exports = {
   getProducts,
+  getProductById,
   addProduct,
   updateProduct,
   deleteProduct
