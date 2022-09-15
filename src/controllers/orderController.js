@@ -13,10 +13,10 @@ const getOrders = async (req, res) => {
 };
 const addOrder = async (req, res) => {
   try {
-    const { total_price, order_time, VAT } = req.body;
+    const { user_id, total_price, order_time, VAT } = req.body;
 
     const orderModel = {
-        total_price, order_time, VAT
+      user_id, total_price, order_time, VAT
     };
     const result = await model.order.create(orderModel);
     response.successCode("Add order success", result, res);
@@ -42,10 +42,8 @@ const updateOrder = async (req, res) => {
 
 const deleteOrder = async (req, res) => {
   try {
-    const { id } = req.params;
-    const orderDelete = await model.order.findByPk(id);
-    const result = await orderDelete.destroy();
-    response.successCode("Delete order success", result, res);
+    const result = await model.order.destroy({ where: { id: req.body }});
+    response.successCode("Delete brand success", result, res);
   } catch (error) {
     response.failCode("Error", res);
   }
