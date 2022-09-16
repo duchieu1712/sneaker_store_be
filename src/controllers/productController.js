@@ -30,7 +30,7 @@ const getProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   // try {
     const { id } = req.params;
-    const result = await model.product.findOne({
+    const result = await model.product.findAll({
       where: { id: id },
       include: "size_id_sizes",
     });
