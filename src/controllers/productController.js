@@ -28,16 +28,16 @@ const getProducts = async (req, res) => {
   }
 };
 const getProductById = async (req, res) => {
-  // try {
+  try {
     const { id } = req.params;
-    const result = await model.product.findAll({
+    const result = await model.product.findOne({
       where: { id: id },
       include: "size_id_sizes",
     });
     response.successCode("Successfully", result, res);
-  // } catch (error) {
-  //   response.errorCode("Error", res);
-  // }
+  } catch (error) {
+    response.errorCode("Error", res);
+  }
 };
 
 const addProduct = async (req, res) => {

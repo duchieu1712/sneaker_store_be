@@ -4,7 +4,7 @@ const productSizeRoute = express.Router()
 
 const productSizeController = require('../../controllers/productSizeController')
 
-orderRoute.post("/addProductSize", productSizeController.addProductSize)
-orderRoute.put("/updateProductSize", productSizeController.updateProductSize)
+productSizeRoute.post("/addProductSize", productSizeController.addProductSize)
+productSizeRoute.put("/updateProductSize", productSizeController.updateProductSize)
 
 module.exports = productSizeRoute
