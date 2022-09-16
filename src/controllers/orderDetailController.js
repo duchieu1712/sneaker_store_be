@@ -7,7 +7,7 @@ const getOrderDetailByOrderId = async (req, res) => {
   try {
     const { order_id } = req.params;
     const result = await model.order_detail.findAll({
-      where: order_id,
+      where: {order_id: order_id},
       include: "product",
     });
     response.successCode("Successfully", result, res);
