@@ -37,10 +37,6 @@ class product extends Sequelize.Model {
       allowNull: true,
       defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
     },
-    size: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
     category_id: {
       type: DataTypes.INTEGER,
       allowNull: true,

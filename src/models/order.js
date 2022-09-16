@@ -16,7 +16,7 @@ class order extends Sequelize.Model {
       type: DataTypes.FLOAT,
       allowNull: true
     },
-    order_time: {
+    ordercreate_time: {
       type: DataTypes.DATE,
       allowNull: true,
       defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
@@ -40,6 +40,14 @@ class order extends Sequelize.Model {
         model: 'delivery',
         key: 'id'
       }
+    },
+    orderconfirm_time: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    order_status: {
+      type: DataTypes.INTEGER,
+      allowNull: true
     }
   }, {
     sequelize,

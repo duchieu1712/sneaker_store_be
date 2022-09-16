@@ -2,8 +2,9 @@ const initModel = require("../models/init-models");
 const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 const { base_url } = require("../config");
+const product_size = require("../models/product_size");
 
 const getProducts = async (req, res) => {
   try {
@@ -15,8 +16,8 @@ const getProducts = async (req, res) => {
     if (category) {
       options.where.category_id = category;
     }
-    if(search){
-      options.where.name = {[Op.like]: `%${search}%`};
+    if (search) {
+      options.where.name = { [Op.like]: `%${search}%` };
     }
     if (!brand && !category && !search) {
       options = { include: ["brand", "category", "discount"] };
@@ -29,13 +30,16 @@ const getProducts = async (req, res) => {
 };
 const getProductById = async (req, res) => {
   try {
-    const {id} = req.params;
-    const result = await model.product.findByPk(id);
+    const { id } = req.params;
+    const result = await model.product.findAll({
+      where: { id: id },
+      include: "size_id_sizes",
+    });
     response.successCode("Successfully", result, res);
   } catch (error) {
-    response.errorCode("Error", res)
+    response.errorCode("Error", res);
   }
-}
+};
 
 const addProduct = async (req, res) => {
   try {
@@ -124,26 +128,26 @@ const updateProduct = async (req, res) => {
       descrip,
       price_discounted,
     };
-    const result = await productUpdate.update(productModel)
+    const result = await productUpdate.update(productModel);
     response.successCode("Update product success", result, res);
   } catch (error) {
     response.failCode("Error", res);
   }
 };
 
-const deleteProduct = async (req,res) => {
+const deleteProduct = async (req, res) => {
   try {
-    const result = await model.product.destroy({ where: { id: req.body }});
+    const result = await model.product.destroy({ where: { id: req.body } });
     response.successCode("Delete product success", result, res);
   } catch (error) {
-    response.failCode("Error", res)
+    response.failCode("Error", res);
   }
-}
+};
 
 module.exports = {
   getProducts,
   getProductById,
   addProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
 };

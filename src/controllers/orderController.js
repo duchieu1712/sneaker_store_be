@@ -13,10 +13,10 @@ const getOrders = async (req, res) => {
 };
 const addOrder = async (req, res) => {
   try {
-    const { user_id, total_price, order_time, VAT } = req.body;
+    const { user_id, ordercreate_time, order_status } = req.body;
 
     const orderModel = {
-      user_id, total_price, order_time, VAT
+      user_id, ordercreate_time, order_status
     };
     const result = await model.order.create(orderModel);
     response.successCode("Add order success", result, res);
@@ -28,10 +28,10 @@ const addOrder = async (req, res) => {
 const updateOrder = async (req, res) => {
   try {
     const { id } = req.params;
-    const { total_price, order_time, VAT } = req.body;
+    const { total_price, order_time, VAT, orderconfirm_time, order_status } = req.body;
     const orderUpdate = await model.order.findByPk(id);
     const orderModel = {
-        total_price, order_time, VAT
+      total_price, order_time, VAT, orderconfirm_time, order_status
     };
     const result = await orderUpdate.update(orderModel);
     response.successCode("Update order success", result, res);
