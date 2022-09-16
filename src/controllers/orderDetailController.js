@@ -3,9 +3,13 @@ const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
 
-const getOrderDetails = async (req, res) => {
+const getOrderDetailByOrderId = async (req, res) => {
   try {
-    const result = await model.order_detail.findAll();
+    const { order_id } = req.params;
+    const result = await model.order_detail.findAll({
+      where: order_id,
+      include: "product",
+    });
     response.successCode("Successfully", result, res);
   } catch (error) {
     response.failCode("Error", res);
@@ -53,8 +57,8 @@ const deleteOrderDetail = async (req, res) => {
   }
 };
 module.exports = {
-  getOrderDetails,
   addOrderDetail,
   updateOrderDetail,
   deleteOrderDetail,
+  getOrderDetailByOrderId
 };

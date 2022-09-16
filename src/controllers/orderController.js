@@ -12,19 +12,6 @@ const getOrders = async (req, res) => {
   }
 };
 
-const getOrderDetail = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const result = await model.order.findOne({
-      where: { id: id },
-      include: "order_details",
-    });
-    response.successCode("Successfully", result, res);
-  } catch (error) {
-    response.failCode("Error", res);
-  }
-};
-
 const addOrder = async (req, res) => {
   try {
     const { user_id, ordercreate_time, order_status } = req.body;
