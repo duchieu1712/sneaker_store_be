@@ -12,7 +12,7 @@ class size extends Sequelize.Model {
       allowNull: false,
       primaryKey: true
     },
-    size: {
+    name: {
       type: DataTypes.STRING(255),
       allowNull: true
     }

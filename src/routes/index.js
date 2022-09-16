@@ -10,6 +10,7 @@ const orderDetailRoute = require('./v1/orderDetailRoute')
 const orderRoute = require('./v1/orderRoute')
 const deliveryRoute = require('./v1/deliveryRoute')
 const productSizeRoute = require('./v1/productSizeRoute')
+const sizeRoute = require('./v1/sizeRoute')
 
 rootRouter.use("/v1/user",userRoute)
 rootRouter.use("/v1/product",productRoute)
@@ -20,6 +21,7 @@ rootRouter.use("/v1/discount",discountRoute)
 rootRouter.use("/v1/orderDetail",orderDetailRoute)
 rootRouter.use("/v1/order",orderRoute)
 rootRouter.use("/v1/productSize",productSizeRoute)
+rootRouter.use("/v1/size",sizeRoute)
 
 
 module.exports = rootRouter
