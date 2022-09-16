@@ -5,7 +5,7 @@ const response = require("../config/reponse");
 
 const getOrders = async (req, res) => {
   try {
-    const result = await model.order.findAll();
+    const result = await model.order.findAll({include: ["user", "delivery"]});
     response.successCode("Successfully", result, res);
   } catch (error) {
     response.failCode("Error", res);
