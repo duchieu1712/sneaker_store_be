@@ -31,7 +31,11 @@ class order_detail extends Sequelize.Model {
         model: 'product',
         key: 'id'
       }
-    }
+    },
+    size: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
   }, {
     sequelize,
     tableName: 'order_detail',
