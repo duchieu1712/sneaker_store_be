@@ -12,7 +12,7 @@ const addProductSize = async (req, res) => {
       amount,
     };
     const result = await model.product_size.create(productSizeModel);
-    response.successCode("Add order success", result, res);
+    response.successCode("Add product size success", result, res);
   } catch (error) {
     response.failCode("Error", res);
   }
