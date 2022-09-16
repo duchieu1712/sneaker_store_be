@@ -2,9 +2,8 @@ const initModel = require("../models/init-models");
 const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
-const { Op, where } = require("sequelize");
+const { Op } = require("sequelize");
 const { base_url } = require("../config");
-const product_size = require("../models/product_size");
 
 const getProducts = async (req, res) => {
   try {
@@ -31,7 +30,7 @@ const getProducts = async (req, res) => {
 const getProductById = async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await model.product.findAll({
+    const result = await model.product.findOne({
       where: { id: id },
       include: "size_id_sizes",
     });
