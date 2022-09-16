@@ -2,18 +2,16 @@ const initModel = require("../models/init-models");
 const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
-const { Op } = require("sequelize");
-const { base_url } = require("../config");
 
 const addProductSize = async (req, res) => {
   try {
     const { product_id, size_id, amount } = req.body;
-    const orderModel = {
+    const productSizeModel = {
       product_id,
       size_id,
       amount,
     };
-    const result = await model.order.create(orderModel);
+    const result = await model.product_size.create(productSizeModel);
     response.successCode("Add order success", result, res);
   } catch (error) {
     response.failCode("Error", res);
