@@ -17,10 +17,10 @@ const getOrderDetailByOrderId = async (req, res) => {
 };
 const addOrderDetail = async (req, res) => {
   try {
-    const { amount, size, order_id, productId } = req.body;
+    const { amount, size, order_id, product_id } = req.body;
     const order_detailModel = {
       amount,
-      product_id: productId,
+      product_id,
       size,
       order_id,
     };
