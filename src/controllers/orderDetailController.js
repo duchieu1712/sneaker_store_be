@@ -13,11 +13,13 @@ const getOrderDetails = async (req, res) => {
 };
 const addOrderDetail = async (req, res) => {
   try {
-    const { amount } = req.body;
+    const { amount,size,order_id } = req.body;
     const {productId} = req.params;
     const order_detailModel = {
       amount,
-      product_id: productId
+      product_id: productId,
+      size,
+      order_id
     };
     const result = await model.order_detail.create(order_detailModel);
     response.successCode("Add order_detail success", result, res);
