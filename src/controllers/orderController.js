@@ -61,5 +61,4 @@ module.exports = {
   addOrder,
   updateOrder,
   deleteOrder,
-  getOrderDetail,
 };
