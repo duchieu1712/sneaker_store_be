@@ -2,6 +2,7 @@ const express = require('express');
 const rootRouter = require('./routes/index')
 const app = express();
 const config = require('../src/config')
+const cors = require('cors')
 // const bodyParser = require('body-parser')
 
 // app.use(bodyParser.urlencoded({ extended: false }))
@@ -21,5 +22,7 @@ app.listen(config.port || 8080, () => {
 
 })
 
+
+app.use(cors())
 app.use("/api",rootRouter)
 
