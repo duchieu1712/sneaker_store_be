@@ -5,7 +5,7 @@ const response = require("../config/reponse");
 
 const getProductSizeList = async (req, res) => {
   try {
-    const result = model.product_size.findAll({include: ["product","size"]})
+    const result = model.product_size.findAll()
     response.successCode("Get success", result, res)
   } catch (error) {
     response.failCode("Error", res)
