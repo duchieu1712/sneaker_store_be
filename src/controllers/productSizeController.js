@@ -3,6 +3,15 @@ const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
 
+const getProductSizeList = async (req, res) => {
+  try {
+    const result = model.product_size.findAll({include: ["product","size"]})
+    response.successCode("Get success", result, res)
+  } catch (error) {
+    response.failCode("Error", res)
+  }
+}
+
 const addProductSize = async (req, res) => {
   try {
     const { product_id, size_id, amount } = req.body;
@@ -40,6 +49,7 @@ const updateProductSize = async (req, res) => {
 };
 
 module.exports = {
+  getProductSizeList,
   addProductSize,
   updateProductSize,
 };
