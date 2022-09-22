@@ -70,7 +70,7 @@ const searchBrands = async (req,res)=> {
     })
     response.successCode("Search brand success", result, res);
   }  catch(error){
-
+    response.failCode("Error", res)
   }
 }
 module.exports = {
