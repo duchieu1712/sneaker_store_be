@@ -65,7 +65,7 @@ const searchBrands = async (req,res)=> {
     const {search} = req.body
     const result = await model.brand.findAll({
       where:{
-        name: {[Op.like]: `%${search}%`}
+        name: {[Op.like]: `%${search}`}
       }
     })
     response.successCode("Search brand success", result, res);
