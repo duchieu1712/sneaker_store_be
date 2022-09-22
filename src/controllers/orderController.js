@@ -14,11 +14,10 @@ const getOrders = async (req, res) => {
 
 const addOrder = async (req, res) => {
   try {
-    const { user_id, ordercreate_time, order_status } = req.body;
+    const { user_id, order_status } = req.body;
 
     const orderModel = {
       user_id,
-      ordercreate_time,
       order_status,
     };
     const result = await model.order.create(orderModel);

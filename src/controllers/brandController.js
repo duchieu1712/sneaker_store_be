@@ -59,9 +59,24 @@ const deleteBrand = async (req,res) => {
     response.failCode("Error", res)
   }
 }
+
+const searchBrands = async (req,res)=> {
+  try {
+    const {search} = req.body
+    const result = await model.brand.findAll({
+      where:{
+        name: {[Op.like]: `%${search}`}
+      }
+    })
+    response.successCode("Search brand success", result, res);
+  }  catch(error){
+    response.failCode("Error", res)
+  }
+}
 module.exports = {
   getBrands,
   addBrand,
   updateBrand,
-  deleteBrand
+  deleteBrand,
+  searchBrands
 };
