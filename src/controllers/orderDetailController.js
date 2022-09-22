@@ -17,14 +17,14 @@ const getOrderDetailByOrderId = async (req, res) => {
 };
 const addOrderDetail = async (req, res) => {
   try {
-    const { amount, size, order_id, product_id } = req.body;
-    const order_detailModel = {
-      amount,
-      product_id,
-      size,
-      order_id,
-    };
-    const result = await model.order_detail.create(order_detailModel);
+    // const { amount, size, order_id, product_id } = req.body;
+    // const order_detailModel = {
+    //   amount,
+    //   product_id,
+    //   size,
+    //   order_id,
+    // };
+    const result = await model.order_detail.bulkCreate(req.body);
     response.successCode("Add order_detail success", result, res);
   } catch (error) {
     response.failCode("Error", res);
