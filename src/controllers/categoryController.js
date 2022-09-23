@@ -3,6 +3,7 @@ const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
 const category = require("../models/category");
+const { Op } = require("sequelize");
 
 const getCategories = async (req, res) => {
   try {
@@ -55,9 +56,23 @@ const deleteCategory = async (req,res) => {
     response.failCode("Error", res)
   }
 }
+const searchCategories = async (req,res)=> {
+  try {
+    const {search} = req.body
+    const result = await model.category.findAll({
+      where:{
+        name: {[Op.like]: `%${search}%`}
+      }
+    })
+    response.successCode("Search category success", result, res);
+  }  catch(error){
+    response.failCode("Error", res)
+  }
+}
 module.exports = {
   getCategories,
   addCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  searchCategories
 };

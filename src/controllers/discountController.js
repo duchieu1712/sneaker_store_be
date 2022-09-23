@@ -2,6 +2,7 @@ const initModel = require("../models/init-models");
 const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
+const { Op } = require("sequelize");
 
 const getDiscounts = async (req, res) => {
   try {
@@ -54,9 +55,23 @@ const deleteDiscount = async (req,res) => {
     response.failCode("Error", res)
   }
 }
+const searchDiscounts = async (req,res)=> {
+  try {
+    const {search} = req.body
+    const result = await model.discount.findAll({
+      where:{
+        name: {[Op.like]: `%${search}%`}
+      }
+    })
+    response.successCode("Search discount success", result, res);
+  }  catch(error){
+    response.failCode("Error", res)
+  }
+}
 module.exports = {
   getDiscounts,
   addDiscount,
   updateDiscount,
-  deleteDiscount
+  deleteDiscount,
+  searchDiscounts
 };

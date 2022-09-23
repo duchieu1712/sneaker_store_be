@@ -2,6 +2,7 @@ const initModel = require("../models/init-models");
 const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
+const { Op } = require("sequelize");
 
 const getDeliveries = async (req, res) => {
   try {
@@ -54,9 +55,23 @@ const deleteDelivery = async (req,res) => {
     response.failCode("Error", res)
   }
 }
+const searchDeliveries = async (req,res)=> {
+  try {
+    const {search} = req.body
+    const result = await model.delivery.findAll({
+      where:{
+        name: {[Op.like]: `%${search}%`}
+      }
+    })
+    response.successCode("Search delivery success", result, res);
+  }  catch(error){
+    response.failCode("Error", res)
+  }
+}
 module.exports = {
   getDeliveries,
   addDelivery,
   updateDelivery,
-  deleteDelivery
+  deleteDelivery,
+  searchDeliveries
 };

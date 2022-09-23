@@ -3,6 +3,7 @@ const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
 const authController = require("./authController");
+const { Op } = require("sequelize");
 
 const getUserById = async (req, res) => {
   try {
@@ -184,6 +185,19 @@ const forgotPassword = async (req, res) => {
     response.failCode("Error", res);
   }
 };
+const searchUsers = async (req,res)=> {
+  try {
+    const {search} = req.body
+    const result = await model.user.findAll({
+      where:{
+        username: {[Op.like]: `%${search}%`}
+      }
+    })
+    response.successCode("Search user success", result, res);
+  }  catch(error){
+    response.failCode("Error", res)
+  }
+}
 module.exports = {
   getUserById,
   getUserList,
@@ -193,5 +207,6 @@ module.exports = {
   updateUser,
   deleteUser,
   changePassword,
-  forgotPassword
+  forgotPassword,
+  searchUsers
 };

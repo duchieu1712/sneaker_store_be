@@ -3,6 +3,7 @@ const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
 const { base_url } = require("../config");
+const { Op } = require("sequelize");
 
 const getBrands = async (req, res) => {
   try {
@@ -65,7 +66,7 @@ const searchBrands = async (req,res)=> {
     const {search} = req.body
     const result = await model.brand.findAll({
       where:{
-        name: {[Op.like]: `%${search}`}
+        name: {[Op.like]: `%${search}%`}
       }
     })
     response.successCode("Search brand success", result, res);

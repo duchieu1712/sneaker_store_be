@@ -12,5 +12,6 @@ userRoute.put("/updateUser/:id", authController.verifyToken, userController.upda
 userRoute.post("/deleteUser", authController.verifyToken, userController.deleteUser)
 userRoute.put("/changePassword/:id", authController.verifyToken, userController.changePassword)
 userRoute.put("/forgotPassword", userController.forgotPassword)
+userRoute.post("/searchUsers", userController.searchUsers)
 
 module.exports = userRoute

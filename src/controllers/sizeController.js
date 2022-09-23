@@ -2,6 +2,8 @@ const initModel = require("../models/init-models");
 const sequelize = require("../models/index");
 const model = initModel(sequelize);
 const response = require("../config/reponse");
+const { Op } = require("sequelize");
+
 
 const getSizes = async (req, res) => {
   try {
@@ -54,9 +56,23 @@ const deleteSize = async (req,res) => {
     response.failCode("Error", res)
   }
 }
+const searchSizes = async (req,res)=> {
+  try {
+    const {search} = req.body
+    const result = await model.size.findAll({
+      where:{
+        name: {[Op.like]: `%${search}%`}
+      }
+    })
+    response.successCode("Search size success", result, res);
+  }  catch(error){
+    response.failCode("Error", res)
+  }
+}
 module.exports = {
   getSizes,
   addSize,
   updateSize,
-  deleteSize
+  deleteSize,
+  searchSizes
 };

@@ -9,4 +9,5 @@ discountRoute.get("/getDiscounts", discountController.getDiscounts)
 discountRoute.post("/addDiscount", authController.verifyToken, discountController.addDiscount)
 discountRoute.put("/updateDiscount/:id", authController.verifyToken, discountController.updateDiscount)
 discountRoute.post("/deleteDiscount", authController.verifyToken, discountController.deleteDiscount)
+discountRoute.post("/searchDiscounts", discountController.searchDiscounts)
 module.exports = discountRoute
