@@ -14,12 +14,25 @@ const getOrders = async (req, res) => {
 
 const addOrder = async (req, res) => {
   try {
-    const { delivery_id, total_price, user_id, amount, size, product_id } = req.body;
+    const { delivery_id, total_price, user_id, order_detail } = req.body;
 
-    const orderModel = { delivery_id, total_price, user_id }
-    const result = await model.order.create(orderModel);
-
-    response.successCode("Add order success", result, res);
+    const orderModel = { delivery_id, total_price, user_id };
+    const createOrder = await model.order.create(orderModel);
+    if (createOrder) {
+      const newOrder_id = createOrder.id;
+      const orderDetailModel = [];
+      order_detail.map((item) => {
+        const orderDetailItem = Object.assign(item, { order_id: newOrder_id });
+        orderDetailModel.push(orderDetailItem);
+      });
+      const result = await model.order_detail.bulkCreate(
+        orderDetailModel
+      );
+      response.successCode("Add order success", result, res);
+    }else{
+      response.errorCode("Error", res);
+    }
+    
   } catch (error) {
     response.failCode("Error", res);
   }
