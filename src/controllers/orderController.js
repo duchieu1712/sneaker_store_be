@@ -21,13 +21,16 @@ const addOrder = async (req, res) => {
     if (createOrder) {
       const newOrder_id = createOrder.id;
       const orderDetailModel = [];
-      order_detail.map((item) => {
+      order_detail.map( async (item) => {
         const orderDetailItem = Object.assign(item, { order_id: newOrder_id });
         orderDetailModel.push(orderDetailItem);
+        const productSize = await model.product_size.findOne({where: {product_id: item.product_id, order_id: item.order_id}})
+        await productSize.update({amount: amount - item.amount})
       });
       const result = await model.order_detail.bulkCreate(
         orderDetailModel
       );
+      
       response.successCode("Add order success", result, res);
     }else{
       response.errorCode("Error", res);
