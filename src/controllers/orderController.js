@@ -14,13 +14,11 @@ const getOrders = async (req, res) => {
 
 const addOrder = async (req, res) => {
   try {
-    const { user_id, order_status } = req.body;
+    const { delivery_id, total_price, user_id, amount, size, product_id } = req.body;
 
-    const orderModel = {
-      user_id,
-      order_status,
-    };
+    const orderModel = { delivery_id, total_price, user_id }
     const result = await model.order.create(orderModel);
+
     response.successCode("Add order success", result, res);
   } catch (error) {
     response.failCode("Error", res);
