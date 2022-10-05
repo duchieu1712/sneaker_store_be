@@ -198,6 +198,24 @@ const searchUsers = async (req,res)=> {
     response.failCode("Error", res)
   }
 }
+
+const refreshToken = (req,res)=>{
+  try{
+  let {id} = req.body
+  const findUser = await model.user.findByPk(id);
+  const token = authController.generateToken(findUser);
+  const result = {
+    token,
+    user_type: findUser.user_type,
+    id: findUser.id,
+    status: findUser.status
+  };
+  response.successCode("Sign in success", result, res);
+}catch(err) {
+  response.errorCode("Wrong email or password !!!", res);
+
+}
+}
 module.exports = {
   getUserById,
   getUserList,
@@ -208,5 +226,6 @@ module.exports = {
   deleteUser,
   changePassword,
   forgotPassword,
-  searchUsers
+  searchUsers,
+  refreshToken
 };
