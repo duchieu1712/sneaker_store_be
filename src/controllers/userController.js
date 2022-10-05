@@ -199,7 +199,7 @@ const searchUsers = async (req,res)=> {
   }
 }
 
-const refreshToken = (req,res)=>{
+const refreshToken =async (req,res)=>{
   try{
   let {id} = req.body
   const findUser = await model.user.findByPk(id);
