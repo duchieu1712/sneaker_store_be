@@ -201,7 +201,7 @@ const searchUsers = async (req,res)=> {
 
 const refreshToken =async (req,res)=>{
   try{
-  let {id} = req.body
+  let {id} = req.params
   const findUser = await model.user.findByPk(id);
   const token = authController.generateToken(findUser);
   const result = {
