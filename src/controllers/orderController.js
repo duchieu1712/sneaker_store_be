@@ -28,7 +28,7 @@ const addOrder = async (req, res) => {
         const productSizeAmount = {
           amount: amount - item.amount
         }
-        await productSize.update(productSizeAmount)
+        const updateProductSize = await productSize.update(productSizeAmount)
       });
       const result = await model.order_detail.bulkCreate(
         orderDetailModel
