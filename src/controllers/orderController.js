@@ -25,7 +25,10 @@ const addOrder = async (req, res) => {
         const orderDetailItem = Object.assign(item, { order_id: newOrder_id });
         orderDetailModel.push(orderDetailItem);
         const productSize = await model.product_size.findOne({where: {product_id: item.product_id, size_id: item.size_id}})
-        const updateProductSize = await productSize.update({amount: amount - item.amount})
+        const productSizeAmount = {
+          amount: amount - item.amount
+        }
+        await productSize.update(productSizeAmount)
       });
       const result = await model.order_detail.bulkCreate(
         orderDetailModel
