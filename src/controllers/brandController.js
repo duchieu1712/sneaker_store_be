@@ -16,7 +16,7 @@ const getBrands = async (req, res) => {
 const addBrand = async (req, res) => {
   try {
     let { name, descrip } = req.body;
-    let image = `${base_url}public/images/${req.file?.filename}`
+    let image = `${process.cwd()}/public/images/${req.file?.filename}`
     const checkBrandExist = await model.brand.findOne({
       where: { name: name },
     });
@@ -40,7 +40,7 @@ const updateBrand = async (req,res) => {
   try {
     const {id}= req.params
     const { name, descrip } = req.body;
-    let image = `${base_url}public/images/${req.file?.filename}`
+    let image = req.file?.path
     const brandUpdate = await model.brand.findByPk(id)
     const brandModel = {
       name,image,descrip

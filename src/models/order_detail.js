@@ -32,8 +32,8 @@ class order_detail extends Sequelize.Model {
         key: 'id'
       }
     },
-    size: {
-      type: DataTypes.STRING(255),
+    size_id: {
+      type: DataTypes.INTEGER,
       allowNull: true
     }
   }, {
