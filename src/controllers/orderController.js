@@ -5,7 +5,9 @@ const response = require("../config/reponse");
 
 const getOrders = async (req, res) => {
   try {
-    const result = await model.order.findAll({ include: ["user", "delivery","order_details"] });
+    const result = await model.order.findAll({
+      include: ["user", "delivery", "order_details"],
+    });
     response.successCode("Successfully", result, res);
   } catch (error) {
     response.failCode("Error", res);
@@ -21,21 +23,24 @@ const addOrder = async (req, res) => {
     if (createOrder) {
       const newOrder_id = createOrder.id;
       const orderDetailModel = [];
-      order_detail.map( async (item) => {
+      order_detail.map(async (item) => {
         const orderDetailItem = Object.assign(item, { order_id: newOrder_id });
         orderDetailModel.push(orderDetailItem);
-        const productSize = await model.product_size.findOne({where: {product_id: item.product_id, size_id: item.size_id}})
-        const updateProductSize = await productSize.update({amount: amount - item.amount})
+        const productSize = await model.product_size.findOne({
+          where: { product_id: item.product_id, size_id: item.size_id },
+        });
+        if (productSize.amount > 0) {
+          const productSizeAmount = {
+            amount: productSize.amount - item.amount,
+          };
+          await productSize.update(productSizeAmount);
+        }
       });
-      const result = await model.order_detail.bulkCreate(
-        orderDetailModel
-      );
-      
+      const result = await model.order_detail.bulkCreate(orderDetailModel);
       response.successCode("Add order success", result, res);
-    }else{
+    } else {
       response.errorCode("Error", res);
     }
-    
   } catch (error) {
     response.failCode("Error", res);
   }

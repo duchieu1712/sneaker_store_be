@@ -7,7 +7,7 @@ const { Op } = require("sequelize");
 
 const getUserById = async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const result = await model.user.findByPk(id);
     response.successCode("Successfully", result, res);
   } catch (error) {
@@ -95,7 +95,7 @@ const signIn = async (req, res) => {
         token,
         user_type: checkUser.user_type,
         id: checkUser.id,
-        status: checkUser.status
+        status: checkUser.status,
       };
       response.successCode("Sign in success", result, res);
     } else {
@@ -140,8 +140,8 @@ const deleteUser = async (req, res) => {
 const changePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword, confirmPassword } = req.body;
-    const {id} = req.params;
-    const userChangePassword = await model.user.findOne({where: {id :id}})
+    const { id } = req.params;
+    const userChangePassword = await model.user.findOne({ where: { id: id } });
     const checkPassword = authController.comparePassword(
       oldPassword,
       userChangePassword.password
@@ -167,7 +167,9 @@ const changePassword = async (req, res) => {
 const forgotPassword = async (req, res) => {
   try {
     const { email, newPassword, confirmPassword } = req.body;
-    const checkEmailUser = await model.user.findOne({where: {email :email}})
+    const checkEmailUser = await model.user.findOne({
+      where: { email: email },
+    });
     if (checkEmailUser) {
       if (newPassword === confirmPassword) {
         const userPassword = {
@@ -185,37 +187,31 @@ const forgotPassword = async (req, res) => {
     response.failCode("Error", res);
   }
 };
-const searchUsers = async (req,res)=> {
+const searchUsers = async (req, res) => {
   try {
-    const {search} = req.body
+    const { search } = req.body;
     const result = await model.user.findAll({
-      where:{
-        username: {[Op.like]: `%${search}%`}
-      }
-    })
+      where: {
+        username: { [Op.like]: `%${search}%` },
+      },
+    });
     response.successCode("Search user success", result, res);
-  }  catch(error){
-    response.failCode("Error", res)
+  } catch (error) {
+    response.failCode("Error", res);
   }
-}
+};
 
-const refreshToken =async (req,res)=>{
-  try{
-  let {id} = req.params
-  const findUser = await model.user.findByPk(id);
-  const token = authController.generateToken(findUser);
-  const result = {
-    token,
-    user_type: findUser.user_type,
-    id: findUser.id,
-    status: findUser.status
-  };
-  response.successCode("Sign in success", result, res);
-}catch(err) {
-  response.errorCode("Wrong email or password !!!", res);
-
-}
-}
+const refreshToken = async (req, res) => {
+  try {
+    let { id } = req.body;
+    const findUser = await model.user.findByPk(id);
+    const refresh = authController.generateToken(findUser);
+    const result = { refresh };
+    response.successCode("Refresh token success", result, res);
+  } catch (err) {
+    response.errorCode("Wrong email or password !!!", res);
+  }
+};
 module.exports = {
   getUserById,
   getUserList,
@@ -227,5 +223,5 @@ module.exports = {
   changePassword,
   forgotPassword,
   searchUsers,
-  refreshToken
+  refreshToken,
 };

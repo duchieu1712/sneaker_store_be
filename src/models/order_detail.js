@@ -62,7 +62,7 @@ class order_detail extends Sequelize.Model {
         fields: [
           { name: "product_id" },
         ]
-      },
+      }
     ]
   });
   }
