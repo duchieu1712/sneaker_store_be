@@ -17,11 +17,11 @@ class brand extends Sequelize.Model {
       allowNull: true
     },
     image: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.CHAR(255),
       allowNull: true
     },
     descrip: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.CHAR(255),
       allowNull: true
     }
   }, {

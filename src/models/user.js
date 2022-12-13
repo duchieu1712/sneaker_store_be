@@ -7,42 +7,37 @@ class user extends Sequelize.Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
-      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
       primaryKey: true
     },
-    username: {
-      type: DataTypes.STRING(255),
+    user_name: {
+      type: DataTypes.CHAR(255),
+      allowNull: true
+    },
+    user_password: {
+      type: DataTypes.CHAR(255),
       allowNull: true
     },
     email: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    password: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.CHAR(255),
       allowNull: true
     },
     phone: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.CHAR(255),
       allowNull: true
     },
-    created_date: {
-      type: DataTypes.DATE,
-      allowNull: true,
-      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
+    create_date: {
+      type: DataTypes.DATEONLY,
+      allowNull: true
     },
     address: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.CHAR(255),
       allowNull: true
     },
     user_type: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    status: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.CHAR(255),
       allowNull: true
     }
   }, {
