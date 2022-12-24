@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  return brand.init(sequelize, DataTypes);
+  return discount.init(sequelize, DataTypes);
 }
 
-class brand extends Sequelize.Model {
+class discount extends Sequelize.Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -12,21 +12,17 @@ class brand extends Sequelize.Model {
       allowNull: false,
       primaryKey: true
     },
+    percent: {
+      type: DataTypes.FLOAT,
+      allowNull: true
+    },
     name: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    image: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    descrip: {
       type: DataTypes.STRING(255),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'brand',
+    tableName: 'discount',
     timestamps: false,
     indexes: [
       {

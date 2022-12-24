@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  return brand.init(sequelize, DataTypes);
+  return size.init(sequelize, DataTypes);
 }
 
-class brand extends Sequelize.Model {
+class size extends Sequelize.Model {
   static init(sequelize, DataTypes) {
   return super.init({
     id: {
@@ -15,18 +15,10 @@ class brand extends Sequelize.Model {
     name: {
       type: DataTypes.STRING(255),
       allowNull: true
-    },
-    image: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    descrip: {
-      type: DataTypes.STRING(255),
-      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'brand',
+    tableName: 'size',
     timestamps: false,
     indexes: [
       {
