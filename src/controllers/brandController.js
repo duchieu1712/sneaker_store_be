@@ -17,6 +17,7 @@ const addBrand = async (req, res) => {
   try {
     let { name, descrip } = req.body;
     let image = `${base_url}public/images/${req.file.filename}`
+    console.log(req);
     const checkBrandExist = await model.brand.findOne({
       where: { name: name },
     });
