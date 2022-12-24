@@ -61,9 +61,9 @@ const signUp = async (req, res) => {
       response.errorCode("Account Existed !!!", res);
     } else {
       const userModel = {
-        username,
+        user_name:username,
         email,
-        password: authController.hashPassword(password),
+        user_password: authController.hashPassword(password),
         phone,
         address,
         user_type: "Customer",
