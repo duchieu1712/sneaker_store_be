@@ -87,7 +87,7 @@ const signIn = async (req, res) => {
     });
     const checkPassword = authController.comparePassword(
       password,
-      checkUser.password
+      checkUser.user_password
     );
     if (checkUser && checkPassword) {
       const token = authController.generateToken(checkUser);
