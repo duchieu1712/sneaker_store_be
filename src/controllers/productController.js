@@ -59,7 +59,7 @@ const addProduct = async (req, res) => {
     //     images.push(src);
     //   });
     // }
-    let images = `${base_url}public/images/${req.file.filename}`
+    let image = `${base_url}public/images/${req.file.filename}`
     const checkProductExist = await model.product.findOne({
       where: { name: name },
     });
@@ -79,7 +79,8 @@ const addProduct = async (req, res) => {
         category_id,
         brand_id,
         discount_id,
-        image: images.toString(),
+        // image: image.toString(),
+        image,
         descrip,
         price_discounted,
       };
