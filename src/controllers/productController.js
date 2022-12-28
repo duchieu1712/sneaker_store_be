@@ -41,7 +41,7 @@ const getProductById = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-  try {
+  // try {
     const {
       name,
       price,
@@ -87,9 +87,9 @@ const addProduct = async (req, res) => {
       const result = await model.product.create(productModel);
       response.successCode("Add product success", result, res);
     }
-  } catch (error) {
-    response.failCode("Error", res);
-  }
+  // } catch (error) {
+    // response.failCode("Error", res);
+  // }
 };
 const updateProduct = async (req, res) => {
   try {
@@ -104,13 +104,14 @@ const updateProduct = async (req, res) => {
       brand_id,
       discount_id,
     } = req.body;
-    const images = [];
-    {
-      req.files.map((item) => {
-        const src = `${base_url}public/images/${item.filename}`;
-        images.push(src);
-      });
-    }
+    // const images = [];
+    // {
+    //   req.files.map((item) => {
+    //     const src = `${base_url}public/images/${item.filename}`;
+    //     images.push(src);
+    //   });
+    // }
+    let image = `${base_url}public/images/${req.file.filename}`
     const productUpdate = await model.product.findByPk(id);
     const discount = await model.discount.findOne({
       where: { id: discount_id },
@@ -125,7 +126,8 @@ const updateProduct = async (req, res) => {
       category_id,
       brand_id,
       discount_id,
-      image: images.toString(),
+      // image: images.toString(),
+      image,
       descrip,
       price_discounted,
     };
