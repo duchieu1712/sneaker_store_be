@@ -64,10 +64,6 @@ class product extends Sequelize.Model {
     price_discounted: {
       type: DataTypes.INTEGER,
       allowNull: true
-    },
-    size: {
-      type: DataTypes.INTEGER,
-      allowNull: true
     }
   }, {
     sequelize,
