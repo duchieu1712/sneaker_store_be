@@ -6,7 +6,7 @@ const productController = require("../../controllers/productController");
 
 productRoute.get("/getProducts", productController.getProducts);
 productRoute.get("/getProductById/:id", productController.getProductById);
-productRoute.post("/addProduct", upload.array("images"), productController.addProduct);
+productRoute.post("/addProduct", upload.any("images"), productController.addProduct);
 productRoute.put("/updateProduct/:id", upload.array("images"), productController.updateProduct);
 productRoute.post("/deleteProduct", productController.deleteProduct);
 
