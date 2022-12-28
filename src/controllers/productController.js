@@ -54,7 +54,7 @@ const addProduct = async (req, res) => {
     } = req.body;
     const images = [];
     {
-      req.files.map((item) => {
+      req.file.map((item) => {
         const src = `${base_url}public/images/${item.filename}`;
         images.push(src);
       });
