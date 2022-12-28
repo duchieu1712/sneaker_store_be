@@ -52,13 +52,14 @@ const addProduct = async (req, res) => {
       brand_id,
       discount_id,
     } = req.body;
-    const images = [];
-    {
-      req.file.map((item) => {
-        const src = `${base_url}public/images/${item.filename}`;
-        images.push(src);
-      });
-    }
+    // const images = [];
+    // {
+    //   req.file.map((item) => {
+    //     const src = `${base_url}public/images/${item.filename}`;
+    //     images.push(src);
+    //   });
+    // }
+    let images = `${base_url}public/images/${req.file.filename}`
     const checkProductExist = await model.product.findOne({
       where: { name: name },
     });
