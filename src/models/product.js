@@ -33,8 +33,9 @@ class product extends Sequelize.Model {
       allowNull: true
     },
     created_date: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: Sequelize.Sequelize.literal('CURRENT_TIMESTAMP')
     },
     category_id: {
       type: DataTypes.INTEGER,
@@ -61,6 +62,10 @@ class product extends Sequelize.Model {
       }
     },
     price_discounted: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    size: {
       type: DataTypes.INTEGER,
       allowNull: true
     }
