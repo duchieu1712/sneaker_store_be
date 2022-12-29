@@ -41,7 +41,7 @@ const getProductById = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-  // try {
+  try {
     const {
       name,
       price,
@@ -87,9 +87,9 @@ const addProduct = async (req, res) => {
       const result = await model.product.create(productModel);
       response.successCode("Add product success", result, res);
     }
-  // } catch (error) {
-    // response.failCode("Error", res);
-  // }
+  } catch (error) {
+    response.failCode("Error", res);
+  }
 };
 const updateProduct = async (req, res) => {
   try {
